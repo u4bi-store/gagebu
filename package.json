@@ -1,0 +1,38 @@
+{
+  "name": "gagebu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "client": "webpack-dev-server",
+    "server": "node src/server",
+    "serve": "nodemon src/server",
+    "dev": "concurrently 'npm run serve' 'npm run client'",
+    "start": "npm run build && npm run server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@types/superagent": "^4.1.3",
+    "express": "^4.17.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "superagent": "^5.1.0"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^4.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
