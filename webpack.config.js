@@ -1,3 +1,4 @@
+const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -8,8 +9,8 @@ module.exports = {
   entry: './src/client/index',
 
   output: {
-    filename: "main.js",
-    path: __dirname + "/dist"
+    filename: 'static/main.js',
+    path: path.resolve(__dirname, 'dist')
   },
 
   devtool: "source-map",
@@ -19,7 +20,8 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:3000'
     },
-    open: true
+    open: true,
+    historyApiFallback: true,
   },
 
   resolve: {
@@ -46,7 +48,7 @@ module.exports = {
     }]),
     new HtmlWebpackPlugin({
       template: './index.html',
-      base: './dist'
+      base: '/static'
     })
   ],
 
