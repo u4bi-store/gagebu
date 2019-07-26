@@ -1,17 +1,9 @@
 import * as React from 'react'
 import request from 'superagent'
-
-
-interface Expense {
-  id: number
-  text: string 
-  amount: number
-}
+import { User, Expense } from '../models';
 
 interface State {
-  user: {
-    name: string
-  }
+  user: User
   expenses: Expense[]
 }
 

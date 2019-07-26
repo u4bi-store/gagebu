@@ -1,8 +1,5 @@
 import { Router, Request, Response } from "express";
-
-interface User {
-  name: string
-}
+import {User} from '../../../models'
 
 const router = Router()
 
