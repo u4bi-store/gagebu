@@ -48,14 +48,14 @@ module.exports = {
       from: './node_modules/superagent/dist/superagent.min.js',
       to: `./${TARGET}/superagent.min.js`
     }, {
-      from: './node_modules/moment/min/moment.min.js',
-      to: `./${TARGET}/moment.min.js`
+      from: './node_modules/antd-mobile/dist/antd-mobile.min.css',
+      to: `./${TARGET}/antd-mobile.min.css`
     }, {
-      from: './node_modules/antd/dist/antd.min.css',
-      to: `./${TARGET}/antd.min.css`
+      from: './node_modules/antd-mobile/dist/antd-mobile.min.css.map',
+      to: `./${TARGET}/antd-mobile.min.css.map`
     }, {
-      from: './node_modules/antd/dist/antd.min.js',
-      to: `./${TARGET}/antd.min.js`
+      from: './node_modules/antd-mobile/dist/antd-mobile.min.js',
+      to: `./${TARGET}/antd-mobile.min.js`
     }]),
     new HtmlWebpackPlugin({
       template: './index.html',
@@ -66,12 +66,13 @@ module.exports = {
     })
   ],
 
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    superagent: 'superagent',
-    moment: 'moment',
-    antd: 'antd',
-  }
+  externals: [
+    {
+      'react': 'React',
+      'react-dom': 'ReactDOM',
+      'superagent': 'superagent',
+      'antd-mobile': 'window["antd-mobile"]',
+    },
+  ]
 }
 

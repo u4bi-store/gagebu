@@ -1,7 +1,7 @@
 import * as React from 'react'
 import request from 'superagent'
 import { User, Expense } from '../server/models';
-import { Button, Icon, Skeleton } from 'antd';
+import { Button, Icon } from 'antd-mobile';
 
 interface State {
   user: User
