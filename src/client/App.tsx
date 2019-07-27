@@ -1,11 +1,11 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, Expense } from '../server/models';
-import { Button, Icon } from 'antd-mobile';
+import { User, DailyExpense, Expense } from '../server/models';
+import { WingBlank, Icon, Button, Badge, NavBar, List, Flex } from 'antd-mobile';
 
 interface State {
   user: User
-  expenses: Expense[]
+  expenses: DailyExpense[]
 }
 
 class App extends React.Component<any, State> {
@@ -33,16 +33,49 @@ class App extends React.Component<any, State> {
   render() {
     return (
       <div>
-        사용자 이름: {this.state.user.name}
-        <ul>{
-          this.state.expenses.map(((expense: Expense, idx)=> {
-            return <li key={idx}>{expense.text} {expense.amount}</li>
-          }))
-        }</ul>
-        <Button type="primary"><Icon type="plus" /> 확인</Button>
+        <NavBar 
+          mode="dark"
+          icon={<Icon type="left" />}
+          onLeftClick={() => console.log('onLeftClick')}
+          rightContent={[
+            <Icon key="0" type="plus" onClick={() => console.log('Click')} />
+          ]}>2019년 7월 지출</NavBar>
+        <WingBlank>
+          {this.state.expenses.map((dailyExpense: DailyExpense) => 
+            <List renderHeader={() => {
+              return (
+                <Flex>
+                  <Flex.Item>{dailyExpense.date}</Flex.Item>
+                  <Flex.Item style={{textAlign: 'right'}}>총 {currency(dailyExpense.amount)}원</Flex.Item>
+                </Flex>
+              )
+            }}>
+              {dailyExpense.expenses.map((expense: Expense) => 
+                <List.Item 
+                  key={expense.id} 
+                  arrow="horizontal" 
+                  extra={currency(expense.amount) + '원'}
+                  align="top"
+                  multipleLine
+                >
+                  {expense.text} {expense.text} {expense.text} 
+                </List.Item>
+              )}
+            </List>
+          )}
+        </WingBlank>
       </div>
     )
   }
+}
+
+const currency = (val: number) => {
+  let str = val.toString()
+  const ptn = /(\d+)(\d{3})$/
+  while (ptn.test(str)) {
+    str = str.replace(ptn, '$1,$2')
+  }
+  return str
 }
 
 export default App
