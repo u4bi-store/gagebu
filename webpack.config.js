@@ -47,6 +47,15 @@ module.exports = {
     }, {
       from: './node_modules/superagent/dist/superagent.min.js',
       to: `./${TARGET}/superagent.min.js`
+    }, {
+      from: './node_modules/moment/min/moment.min.js',
+      to: `./${TARGET}/moment.min.js`
+    }, {
+      from: './node_modules/antd/dist/antd.min.css',
+      to: `./${TARGET}/antd.min.css`
+    }, {
+      from: './node_modules/antd/dist/antd.min.js',
+      to: `./${TARGET}/antd.min.js`
     }]),
     new HtmlWebpackPlugin({
       template: './index.html',
@@ -58,9 +67,11 @@ module.exports = {
   ],
 
   externals: {
-    'react': 'React',
+    react: 'React',
     'react-dom': 'ReactDOM',
-    'superagent': 'superagent'
+    superagent: 'superagent',
+    moment: 'moment',
+    antd: 'antd',
   }
 }
 
