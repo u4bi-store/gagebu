@@ -1,6 +1,7 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, Expense } from '../models';
+import { User, Expense } from '../server/models';
+import { Button, Icon, Skeleton } from 'antd';
 
 interface State {
   user: User
@@ -38,6 +39,7 @@ class App extends React.Component<any, State> {
             return <li key={idx}>{expense.text} {expense.amount}</li>
           }))
         }</ul>
+        <Button type="primary"><Icon type="plus" /> 확인</Button>
       </div>
     )
   }
