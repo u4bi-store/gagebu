@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && tsc",
+    "build": "webpack && tsc && mv ./dist/server/* ./dist/ && rm -Rf ./dist/server ./dist/client",
     "dev": "concurrently 'npm run serve' 'npm run client'",
     "server": "NODE_ENV=production node dist",
     "serve": "nodemon src/server",
