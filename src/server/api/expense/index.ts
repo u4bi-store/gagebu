@@ -49,4 +49,8 @@ router.get('/', (req: Request, res: Response) => {
   res.json(expenses)
 })
 
+router.post('/', (req: Request, res: Response) => {
+  res.json(req.body)
+}) 
+
 export default router

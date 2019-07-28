@@ -9,6 +9,9 @@ const pkg = development
   ? require(path.resolve(__dirname, '../../package.json'))
   : require(path.resolve(__dirname, '../package.json'))
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 app.use('/assets', express.static(path.join(__dirname, pkg.assetPath)))
 app.use('/api', apiRouter)
 app.use('/', (_: Request, res: Response) => {
