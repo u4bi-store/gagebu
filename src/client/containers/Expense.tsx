@@ -1,14 +1,18 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, DailyExpense, Expense } from 'server/models';
+import { User, DailyExpense, Expense, Layout } from 'server/models';
 import ExpensePage from 'client/pages/Expense';
 import { connect } from 'react-redux';
 import { RootState } from 'client/reducers';
-import { fetchExpenseList } from 'client/actions'
+import { fetchExpenseList, setLayout } from 'client/actions'
 import { FetchExpenseListAction } from 'client/reducers/expense';
+import { Icon } from 'antd-mobile';
+import { push  } from "connected-react-router";
 
 interface Props {
   expenses: Expense[]
+  setLayout(layout: Layout): void
+  push(url: string): void
   fetchExpenseList(): FetchExpenseListAction
 }
 
@@ -24,12 +28,21 @@ class ExpenseContainer extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    // xxxxxx
     request.get('/api/users/me').then(res => {
       this.setState({
         user: res.body
       })
     })
 
+    this.props.setLayout({
+      title: '2019년 7월 지출',
+      rightControls: [
+        <Icon key="0" type="plus" onClick={() =>
+          this.props.push('/add')
+        } />
+      ]
+    })
     this.props.fetchExpenseList()
   }
 
@@ -42,6 +55,6 @@ export default connect(
   (state: RootState) => ({
     expenses: state.expense
   }),
-  { fetchExpenseList }
+  { fetchExpenseList, setLayout, push }
 )(ExpenseContainer)
 

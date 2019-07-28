@@ -46,7 +46,7 @@ const ExpensePage: React.FC<ExpensePageProps> = props => {
               align="top"
               multipleLine
             >
-              {expense.text} {expense.text} {expense.text}
+              {expense.text}
             </List.Item>
           )}
         </List>

@@ -14,3 +14,9 @@ export interface DailyExpense {
   amount: number
   expenses: Expense[]
 }
+
+export interface Layout {
+  title: string 
+  leftControl?: React.ReactElement
+  rightControls?: React.ReactElement[]
+}

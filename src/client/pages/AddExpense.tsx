@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { WingBlank, InputItem, List, Button } from 'antd-mobile';
+import { WingBlank, InputItem, List, Button, WhiteSpace } from 'antd-mobile';
 import request from 'superagent'
 import { AddExpenseAction } from 'client/reducers/expense';
 import { Expense } from 'server/models';
@@ -36,6 +36,7 @@ class AddExpensePage extends React.Component<Props, State> {
   render() {
     return (
       <WingBlank>
+        <WhiteSpace />
         <List>
           <InputItem
             placeholder="지출 금액을 입력"
