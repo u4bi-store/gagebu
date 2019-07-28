@@ -11,7 +11,9 @@ class App extends React.Component {
           icon={<Icon type="left" />}
           onLeftClick={() => console.log('onLeftClick')}
           rightContent={[
-            <Icon key="0" type="plus" onClick={() => console.log('Click')} />
+            <Icon key="0" type="plus" onClick={() => 
+              window.location.href = '/add'
+            } />
           ]}>2019년 7월 지출</NavBar>
           <ExpenseContainer />
       </div>
