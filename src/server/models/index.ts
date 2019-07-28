@@ -3,9 +3,10 @@ export interface User {
 }
 
 export interface Expense {
-  id: number
-  text: string
-  amount: number
+  id?: number;
+  amount: number;
+  text: string;
+  date?: string;
 }
 
 export interface DailyExpense {

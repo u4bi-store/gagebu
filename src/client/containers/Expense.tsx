@@ -1,19 +1,26 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, DailyExpense } from 'server/models';
+import { User, DailyExpense, Expense } from 'server/models';
 import ExpensePage from 'client/pages/Expense';
+import { connect } from 'react-redux';
+import { RootState } from 'client/reducers';
+import { fetchExpenseList } from 'client/actions'
+import { FetchExpenseListAction } from 'client/reducers/expense';
 
-interface ExpenseContainerState {
-  user: User
-  expenses: DailyExpense[]
+interface Props {
+  expenses: Expense[]
+  fetchExpenseList(): FetchExpenseListAction
 }
 
-class ExpenseContainer extends React.Component<{}, ExpenseContainerState> {
+interface State {
+  user: User
+}
+
+class ExpenseContainer extends React.Component<Props, State> {
   readonly state = {
     user: {
       name: 'anonymose',
     },
-    expenses: [],
   }
 
   componentDidMount() {
@@ -23,16 +30,18 @@ class ExpenseContainer extends React.Component<{}, ExpenseContainerState> {
       })
     })
 
-    request.get('/api/expenses').then(res => {
-      this.setState({
-        expenses: res.body
-      })
-    })
+    this.props.fetchExpenseList()
   }
 
   render() {
-    return <ExpensePage expenses={this.state.expenses} />
+    return <ExpensePage {...this.props} />
   }
 }
 
-export default ExpenseContainer
+export default connect(
+  (state: RootState) => ({
+    expenses: state.expense
+  }),
+  { fetchExpenseList }
+)(ExpenseContainer)
+

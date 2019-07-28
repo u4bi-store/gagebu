@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import App from 'client/components/App';
-import AddExpensePage from 'client/pages/AddExpense';
+import AddExpenseContainer from 'client/containers/AddExpense';
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from 'client/store/configureStore';
 
 
 const RootRouter: React.FC = props => {
   return (
-    <BrowserRouter>
+    <ConnectedRouter history={history}> 
       <Switch>
-        <Route exact path="/add" component={AddExpensePage} />
+        <Route exact path="/add" component={AddExpenseContainer} />
         <Route component={App} />
       </Switch>
-    </BrowserRouter>
+    </ConnectedRouter>
   )
 }
 

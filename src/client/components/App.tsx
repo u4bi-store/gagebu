@@ -1,8 +1,15 @@
 import * as React from 'react'
 import { Icon, NavBar } from 'antd-mobile';
 import ExpenseContainer from 'client/containers/Expense';
+import { connect } from 'react-redux';
+import { RootState } from 'client/reducers';
+import { push } from "connected-react-router";
 
-class App extends React.Component {
+interface Props {
+  push(url: string): void
+}
+
+class App extends React.Component<Props> {
   render() {
     return (
       <div>
@@ -12,7 +19,7 @@ class App extends React.Component {
           onLeftClick={() => console.log('onLeftClick')}
           rightContent={[
             <Icon key="0" type="plus" onClick={() => 
-              window.location.href = '/add'
+              this.props.push('/add')
             } />
           ]}>2019년 7월 지출</NavBar>
           <ExpenseContainer />
@@ -21,4 +28,9 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default connect(
+  (state: RootState) => ({
+
+  }),
+  {push}
+)(App)

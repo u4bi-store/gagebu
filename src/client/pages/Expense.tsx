@@ -1,16 +1,35 @@
 import * as React from 'react'
 import { WingBlank,  List, Flex } from 'antd-mobile';
-import { DailyExpense, Expense } from 'server/models';
+import moment from 'moment';
+import { Expense, DailyExpense } from 'server/models';
 import { currency } from 'server/utils'
 
 interface ExpensePageProps {
-  expenses: DailyExpense[]
+  expenses: Expense[]
 }
 
 const ExpensePage: React.FC<ExpensePageProps> = props => {
+  const dailyExpense: DailyExpense[] = props.expenses.reduce((acc: DailyExpense[], expense: Expense) => {
+    const dateStr = moment(expense.date).format('YYYY-MM-DD')
+    const dailyExpense: DailyExpense | undefined = acc.find(dailyExpense => dailyExpense.date === dateStr)
+    
+    if (dailyExpense) {
+      dailyExpense.expenses.push(expense)
+      dailyExpense.amount += expense.amount
+    } else {
+      acc.push({
+        date: dateStr,
+        amount: expense.amount,
+        expenses: [expense]
+      })
+    }
+
+    return acc
+  }, [])
+
   return (
     <WingBlank>
-      {props.expenses.map((dailyExpense: DailyExpense) =>
+      {dailyExpense.map((dailyExpense: DailyExpense) =>
         <List renderHeader={() => {
           return (
             <Flex>

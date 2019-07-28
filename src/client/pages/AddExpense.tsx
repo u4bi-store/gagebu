@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { WingBlank, InputItem, List, Button } from 'antd-mobile';
 import request from 'superagent'
+import { AddExpenseAction } from 'client/reducers/expense';
+import { Expense } from 'server/models';
 
 interface Props {
-
+  addExpense(expense: Expense): AddExpenseAction
 }
 
 interface State {
@@ -24,16 +26,11 @@ class AddExpensePage extends React.Component<Props, State> {
     }))
   }
 
-  addExpense = () => {
-    const {amount, text} = this.state
-    request.post('/api/expenses').send({
-      amount,
-      text,
-      date: Date.now(),
-    }).then(res => {
-      console.log(res.body)
-      window.location.href = '/'
-    })
+  handleAddExpense = () => {
+    const {text} = this.state
+    const amount = parseInt(this.state.amount, 10)
+    if (isNaN(amount)) return 
+    this.props.addExpense({amount, text})
   }
 
   render() {
@@ -53,7 +50,7 @@ class AddExpensePage extends React.Component<Props, State> {
           <List.Item>
             <Button 
               type="primary"
-              onClick={this.addExpense}
+              onClick={this.handleAddExpense}
               >저장</Button>
           </List.Item>
         </List>
