@@ -1,51 +1,90 @@
-import path from 'path'
-import express, {Request, Response} from 'express'
-import apiRouter from './api'
-import { Sequelize } from 'sequelize-typescript';
-import { User } from './dbModels/User';
-import { Expense } from './dbModels/Expense';
+#!/usr/bin/env node
 
-const app: express.Application = express()
-const env: string = process.env.NODE_ENV || 'development'
-const development = env === 'development'
-const pkg = development 
-  ? require(path.resolve(__dirname, '../../package.json'))
-  : require(path.resolve(__dirname, '../package.json'))
+/**
+ * Module dependencies.
+ */
 
+var app = require('./app');
+var debug = require('debug')('test:server');
+var http = require('http');
 
-const sequelize = new Sequelize({
-  database: 'gagebu_develop',
-  dialect: 'mysql',
-  host: 'localhost',
-  username: 'root',
-  password: 'test',
-  modelPaths: [__dirname + '/dbModels']
-})
+/**
+ * Get port from environment and store in Express.
+ */
 
-sequelize
-  .sync({force: true})
-  .then(()=> {
-    console.log('db sync done!')
-    const user = new User({email: 'ej88ej@gmail.com'})
-    user.save();
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-    const expense = new Expense({amount: 8000, text: '된장찌게', userId: 1})
-    expense.save()
-  })
+/**
+ * Create HTTP server.
+ */
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+var server = http.createServer(app);
 
-app.use('/assets', express.static(path.join(__dirname, pkg.assetPath)))
-app.use('/api', apiRouter)
-app.use('/', (_: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, 'index.html'))
-})
-app.use('/*', (_: Request, res: Response) => {
-  // fixme 주소는 변경 안됨 
-  res.redirect('/')
-})
+/**
+ * Listen on provided port, on all network interfaces.
+ */
 
-app.listen(3000, () => {
-  console.log('Server is running on 3000')
-}) 
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val: string | number) {
+  var port = parseInt(val.toString(), 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error: any) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
