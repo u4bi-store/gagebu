@@ -1,10 +1,10 @@
 import * as React from 'react'
-import AddExpensePage from 'client/pages/AddExpense'
-import { Expense, Layout } from 'server/models';
-import {AddExpenseAction} from 'client/reducers/expense'
-import {addExpense, setLayout} from 'client/actions'
+import AddExpensePage from '../pages/AddExpense'
+import { Expense, Layout } from '../../server/models';
+import {AddExpenseAction} from '../reducers/expense'
+import {addExpense, setLayout} from '../actions'
 import { connect } from 'react-redux';
-import { RootState } from 'client/reducers';
+import { RootState } from '../reducers';
 import { Icon } from 'antd-mobile';
 import { push, goBack } from "connected-react-router";
 

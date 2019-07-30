@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Route, Switch } from "react-router-dom";
-import LayoutContainer from 'client/containers/Layout';
-import ExpenseContainer from 'client/containers/Expense';
-import AddExpenseContainer from 'client/containers/AddExpense';
+import LayoutContainer from '../containers/Layout';
+import ExpenseContainer from '../containers/Expense';
+import AddExpenseContainer from '../containers/AddExpense';
 import { ConnectedRouter } from 'connected-react-router';
-import { history } from 'client/store/configureStore';
+import { history } from '../store/configureStore';
 
 
 const RootRouter: React.FC = props => {

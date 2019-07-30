@@ -1,11 +1,11 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, DailyExpense, Expense, Layout } from 'server/models';
-import ExpensePage from 'client/pages/Expense';
+import { User, DailyExpense, Expense, Layout } from '../../server/models';
+import ExpensePage from '../pages/Expense';
 import { connect } from 'react-redux';
-import { RootState } from 'client/reducers';
-import { fetchExpenseList, setLayout } from 'client/actions'
-import { FetchExpenseListAction } from 'client/reducers/expense';
+import { RootState } from '../reducers';
+import { fetchExpenseList, setLayout } from '../actions'
+import { FetchExpenseListAction } from '../reducers/expense';
 import { Icon } from 'antd-mobile';
 import { push  } from "connected-react-router";
 

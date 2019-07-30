@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express'
-import { Expense } from 'server/models';
+import { Expense } from 'server/models/index';
 
 const router: Router = Router()
 

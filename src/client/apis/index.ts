@@ -1,5 +1,5 @@
 import superagent from 'superagent'
-import { Expense } from 'server/models';
+import { Expense } from '../../server/models';
 
 export const fetchExpenseList = () => {
   return superagent.get('/api/expenses')

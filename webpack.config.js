@@ -33,7 +33,13 @@ module.exports = {
 
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" }
+      { 
+        test: /\.tsx?$/, 
+        loader: "ts-loader",
+        options: {
+          configFile: 'tsconfig-client.json'
+        }
+      }
     ]
   },
 
