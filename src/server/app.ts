@@ -1,10 +1,9 @@
-
 import path from 'path'
 import express, {Request, Response} from 'express'
 import apiRouter from './api'
 import { Sequelize } from 'sequelize-typescript';
-import { User } from './dbModels/User';
-import { Expense } from './dbModels/Expense';
+import { User } from './models/User';
+import { Expense } from './models/Expense';
 
 const app: express.Application = express()
 const env: string = process.env.NODE_ENV || 'development'
@@ -20,7 +19,7 @@ const sequelize = new Sequelize({
   host: 'localhost',
   username: 'root',
   password: 'test',
-  modelPaths: [__dirname + '/dbModels']
+  modelPaths: [__dirname + '/models']
 })
 
 sequelize

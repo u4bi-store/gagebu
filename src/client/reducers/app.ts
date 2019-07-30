@@ -1,5 +1,5 @@
-import { Layout } from "../../server/models";
-import * as types from '../actions/types'
+import { Layout } from 'server/DTOModels';
+import * as types from 'client/actions/types'
 
 export interface AppState { 
   layout: Layout

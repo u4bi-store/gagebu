@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express'
-import { Expense } from 'server/models/index';
+import { Expense } from 'server/DTOModels/index';
 
 const router: Router = Router()
 

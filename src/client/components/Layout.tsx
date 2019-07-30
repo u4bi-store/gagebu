@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as models from '../../server/models'
+import * as models from 'server/DTOModels'
 import { NavBar } from 'antd-mobile';
 
 interface Props {

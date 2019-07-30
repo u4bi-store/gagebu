@@ -2,7 +2,7 @@ import * as React from 'react'
 import { WingBlank, InputItem, List, Button, WhiteSpace } from 'antd-mobile';
 import request from 'superagent'
 import { AddExpenseAction } from '../reducers/expense';
-import { Expense } from '../../server/models';
+import { Expense } from 'server/DTOModels';
 
 interface Props {
   addExpense(expense: Expense): AddExpenseAction

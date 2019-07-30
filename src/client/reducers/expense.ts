@@ -1,5 +1,5 @@
-import { Expense } from "../../server/models";
-import * as types from '../actions/types'
+import { Expense } from 'server/DTOModels';
+import * as types from 'client/actions/types'
 
 export interface ExpenseState extends Array<Expense> { }
 

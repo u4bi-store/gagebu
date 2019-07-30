@@ -1,6 +1,6 @@
 import * as types from './types'
-import { FetchExpenseListAction, AddExpenseAction } from '../reducers/expense';
-import { Expense, Layout } from 'server/models'
+import { FetchExpenseListAction, AddExpenseAction } from 'client/reducers/expense';
+import { Expense, Layout } from 'server/DTOModels'
 import { SetLayoutAction } from 'client/reducers/app';
 
 export const fetchExpenseList = (): FetchExpenseListAction => ({

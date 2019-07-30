@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {RootState} from '../reducers';
-import * as models from '../../server/models'
-import Layout from '../components/Layout'
+import * as models from 'server/DTOModels'
+import Layout from 'client/components/Layout'
 
 interface Props {
   layout: models.Layout

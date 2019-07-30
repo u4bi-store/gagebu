@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import {User} from 'server/models/index'
+import {User} from 'server/DTOModels/index'
 
 const router = Router()
 

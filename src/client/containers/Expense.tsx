@@ -1,7 +1,7 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, DailyExpense, Expense, Layout } from '../../server/models';
-import ExpensePage from '../pages/Expense';
+import { User, DailyExpense, Expense, Layout } from 'server/DTOModels';
+import ExpensePage from 'client/pages/Expense';
 import { connect } from 'react-redux';
 import { RootState } from '../reducers';
 import { fetchExpenseList, setLayout } from '../actions'

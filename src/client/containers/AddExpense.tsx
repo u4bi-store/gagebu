@@ -1,6 +1,6 @@
 import * as React from 'react'
-import AddExpensePage from '../pages/AddExpense'
-import { Expense, Layout } from '../../server/models';
+import AddExpensePage from 'client/pages/AddExpense'
+import { Expense, Layout } from '../../server/DTOModels';
 import {AddExpenseAction} from '../reducers/expense'
 import {addExpense, setLayout} from '../actions'
 import { connect } from 'react-redux';
