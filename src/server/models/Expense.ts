@@ -1,16 +1,30 @@
-import { Table, Model, PrimaryKey, AutoIncrement, Column, BelongsTo, ForeignKey } from 'sequelize-typescript'
+import { 
+  Table, 
+  Model, 
+  Column, 
+  BelongsTo, 
+  ForeignKey, 
+  AllowNull, 
+  Default, 
+  DataType 
+} from 'sequelize-typescript'
 import { User } from './User';
 
 @Table
 export class Expense extends Model<Expense> {
 
-  @PrimaryKey
-  @AutoIncrement
-  @Column
-  id: number;
-
+  @AllowNull(false)
   @Column
   amount: number;
+
+  @AllowNull(false)
+  @Column
+  text: string;
+
+  @AllowNull(false)
+  @Default(DataType.NOW)
+  @Column
+  date: Date;
 
   @ForeignKey(()=> User)
   @Column

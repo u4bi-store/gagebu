@@ -29,6 +29,11 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+process.once('SIGINT', function () {
+  console.log('do SIGINT')
+  process.exit(1)
+})
+
 /**
  * Normalize a port into a number, string, or false.
  */
