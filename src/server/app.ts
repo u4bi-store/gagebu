@@ -1,7 +1,8 @@
 import path from 'path'
 import express, {Request, Response} from 'express'
-import apiRouter from './api'
 import { Sequelize } from 'sequelize-typescript';
+import morgan from 'morgan'
+import apiRouter from './api'
 import { User } from './models/User';
 import { Expense } from './models/Expense';
 
@@ -32,6 +33,10 @@ sequelize
     const expense = new Expense({amount: 8000, text: '된장찌게', userId: 1})
     expense.save()
   })
+
+if (development) {
+  app.use(morgan('dev'))
+}
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
