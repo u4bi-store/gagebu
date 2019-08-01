@@ -1,31 +1,19 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+import _debug from 'debug'
+import http from 'http'
+import app  from './app';
+import { AddressInfo } from 'net';
+const pkg = require('../../package.json')
 
-var app = require('./app');
-var debug = require('debug')('test:server');
-var http = require('http');
+const debug = _debug(`${pkg.name}:server`);
 
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+const server = http.createServer(app);
 
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
+server.listen(port)
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -34,36 +22,18 @@ process.once('SIGINT', function () {
   process.exit(1)
 })
 
-/**
- * Normalize a port into a number, string, or false.
- */
+function normalizePort (val: string | number): string | number | boolean {
+  const port = parseInt(val.toString(), 10);
 
-function normalizePort(val: string | number) {
-  var port = parseInt(val.toString(), 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
+  if (isNaN(port)) return val
+  if (port >= 0) return port
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+function onError (error: any) {
+  if (error.syscall !== 'listen') throw error;
 
-function onError(error: any) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
+  const bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 
@@ -82,14 +52,10 @@ function onError(error: any) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
+  const addr = server.address();
+  const bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    : 'port ' + (addr as AddressInfo).port;
+  debug('Listening on' + bind);
 }

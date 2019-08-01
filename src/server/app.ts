@@ -51,4 +51,4 @@ app.use('/*', (_: Request, res: Response) => {
   res.redirect('/')
 })
 
-module.exports = app
+export default app

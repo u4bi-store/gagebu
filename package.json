@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack && tsc --project tsconfig-server.json",
     "dev": "concurrently 'npm run serve' 'npm run client'",
-    "server": "NODE_ENV=production node dist",
+    "server": "DEBUG=gagebu:* node --inspect=5858 -r ts-node/register ./src/server/index.ts",
     "serve": "nodemon",
     "client": "webpack-dev-server"
   },
@@ -17,6 +17,19 @@
   "license": "ISC",
   "assetPath": "assets",
   "outputPath": "dist",
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "./src/server"
+    ],
+    "exec": "npm run server",
+    "ext": "ts"
+  },
   "dependencies": {
     "@types/bluebird": "^3.5.27",
     "@types/express": "^4.17.0",
