@@ -14,6 +14,16 @@ export interface FetchExpenseListSuccessAction {
   payload: Expense[]
 }
 
+export interface FetchExpenseAction {
+  type: typeof types.FETCH_EXPENSE_REQUEST
+  payload: string
+}
+
+export interface FetchExpenseSuccessAction {
+  type: typeof types.FETCH_EXPENSE_SUCCESS
+  payload: Expense
+}
+
 export interface AddExpenseAction {
   type: typeof types.ADD_EXPENSE_REQUEST,
   payload: Expense
@@ -26,6 +36,8 @@ export interface AddExpenseSuccessAction {
 
 export type ExpenseActions = FetchExpenseListAction 
   | FetchExpenseListSuccessAction
+  | FetchExpenseAction
+  | FetchExpenseSuccessAction
   | AddExpenseAction 
   | AddExpenseSuccessAction
 
@@ -36,6 +48,22 @@ const expenseReducer = (state = initialState, action: ExpenseActions): ExpenseSt
       if (action.payload) {
         return action.payload
       }
+    case types.FETCH_EXPENSE_SUCCESS: {
+      if (action.payload) {
+        const expense: Expense = action.payload as Expense
+        if (!state.find(item => item.id === expense.id)) {
+          return [...state, expense]
+        }
+
+        return state.map(state => {
+          if (expense.id === state.id) {
+            return expense
+          }
+          return state
+        }) 
+      }
+      return state
+    }
     case types.ADD_EXPENSE_SUCCESS:
       if (action.payload) {
         return [

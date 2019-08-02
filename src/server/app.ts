@@ -24,7 +24,7 @@ const sequelize = new Sequelize({
 })
 
 sequelize
-  .sync({force: true})
+  .sync({force: false})
   .then(()=> {
     console.log('db sync done!')
     const user = new User({email: 'ej88ej@gmail.com'})

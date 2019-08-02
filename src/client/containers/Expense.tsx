@@ -1,60 +1,56 @@
-import * as React from 'react'
-import request from 'superagent'
-import { User, DailyExpense, Expense, Layout } from 'server/DTOModels';
-import ExpensePage from 'client/pages/Expense';
+import React from 'react'
+import ExpensePage from 'client/pages/Expense'
+import { Expense, Layout } from 'server/DTOModels';
 import { connect } from 'react-redux';
-import { RootState } from '../reducers';
-import { fetchExpenseList, setLayout } from '../actions'
-import { FetchExpenseListAction } from '../reducers/expense';
-import { Icon } from 'antd-mobile';
-import { push  } from "connected-react-router";
+import { RootState } from 'client/reducers';
+import { setLayout, fetchExpense } from 'client/actions'
+import { match } from 'react-router';
+import { expenseSelector } from 'client/selectors';
 
 interface Props {
-  expenses: Expense[]
+  id: string
+  expense?: Expense
   setLayout(layout: Layout): void
-  push(url: string): void
-  fetchExpenseList(): FetchExpenseListAction
+  fetchExpense(id: string): void
 }
 
-interface State {
-  user: User
-}
 
-class ExpenseContainer extends React.Component<Props, State> {
-  readonly state = {
-    user: {
-      name: 'anonymose',
-    },
-  }
-
+class ExpenseContainer extends React.Component<Props> {
   componentDidMount() {
-    // xxxxxx
-    request.get('/api/users/me').then(res => {
-      this.setState({
-        user: res.body
-      })
-    })
-
-    this.props.setLayout({
-      title: '2019년 7월 지출',
+    const {id, setLayout, fetchExpense} = this.props
+    setLayout({
+      title: '지출 상세',
+      leftControl: <div>back</div>,
       rightControls: [
-        <Icon key="0" type="plus" onClick={() =>
-          this.props.push('/add')
-        } />
+        <div>edit</div>,
+        <div>delete</div>
       ]
     })
-    this.props.fetchExpenseList()
+    fetchExpense(id)
   }
 
   render() {
-    return <ExpensePage {...this.props} />
+    const {expense} = this.props
+    if (!expense) {
+      return null
+    }
+
+    return <ExpensePage expense={expense} />
   }
+
+}
+
+interface MatchProps {
+  id: string
 }
 
 export default connect(
-  (state: RootState) => ({
-    expenses: state.expense
-  }),
-  { fetchExpenseList, setLayout, push }
+  (state: RootState, props: {match: match<MatchProps>}) => {
+    const {id} = props.match.params
+    return {
+      id,
+      expense: expenseSelector(state, id),
+    }
+  },
+  {setLayout, fetchExpense}
 )(ExpenseContainer)
-

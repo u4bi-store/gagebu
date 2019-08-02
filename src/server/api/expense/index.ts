@@ -15,6 +15,16 @@ router.get('/', async (req: Request, res: Response) => {
   res.json(expenses)
 })
 
+router.get('/:id', async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id || '0', 10)
+  const expense: Expense | null = await Expense.findOne({
+    where: {id: id}
+  })
+  if (!expense) return res.sendStatus(404)
+  
+  res.json(expense)
+})
+
 router.post('/', async (req: Request, res: Response) => {
   const {text} = req.body
   const amount = parseInt(req.body.amount, 10)
