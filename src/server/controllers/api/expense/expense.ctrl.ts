@@ -1,9 +1,7 @@
-import {Router, Request, Response} from 'express'
-import { Expense } from '../../models/Expense';
+import { Request, Response } from 'express'
+import { Expense } from '../../../models/Expense';
 
-const router: Router = Router()
-
-router.get('/', async (req: Request, res: Response) => {
+export const query = async (req: Request, res: Response) => {
   const offset = parseInt(req.query.offset || '0', 10)
   const limit = parseInt(req.query.limit || '20', 10)
 
@@ -13,20 +11,20 @@ router.get('/', async (req: Request, res: Response) => {
     order: [['date', 'DESC']]
   })
   res.json(expenses)
-})
+}
 
-router.get('/:id', async (req: Request, res: Response) => {
+export const show = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id || '0', 10)
   const expense: Expense | null = await Expense.findOne({
-    where: {id: id}
+    where: { id: id }
   })
   if (!expense) return res.sendStatus(404)
-  
-  res.json(expense)
-})
 
-router.post('/', async (req: Request, res: Response) => {
-  const {text} = req.body
+  res.json(expense)
+}
+
+export const create = async (req: Request, res: Response) => {
+  const { text } = req.body
   const amount = parseInt(req.body.amount, 10)
 
   if (!text || isNaN(amount)) {
@@ -34,40 +32,37 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   const expense: Expense = new Expense({
-    amount, 
-    text, 
+    amount,
+    text,
     date: new Date(),
     userId: 1,
   })
   await expense.save()
   res.status(201).json(expense)
-}) 
+}
 
-router.put('/:id', async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   const id = req.params.id
   if (!id) return res.sendStatus(404)
 
-  const {amount, text, date} = req.body
+  const { amount, text, date } = req.body
 
   try {
     const expense = await Expense.update({
-      amount, 
-      text, 
+      amount,
+      text,
       date,
-    }, {where: {id}})
+    }, { where: { id } })
     res.json(expense)
   } catch {
     res.sendStatus(500)
   }
-})
+}
 
-router.delete('/:id', async (req: Request, res: Response) => {
+export const destory = async (req: Request, res: Response) => {
   const id = req.params.id
   if (!id) return res.sendStatus(404)
 
-  await Expense.destroy({ where: {id}})
+  await Expense.destroy({ where: { id } })
   res.sendStatus(204)
-
-})
-
-export default router
+}

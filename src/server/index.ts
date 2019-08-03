@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-import _debug from 'debug'
 import http from 'http'
 import app  from './app';
 import { AddressInfo } from 'net';
+import * as sequelize from './config/sequelize'
+
 const pkg = require('../../package.json')
 
-const debug = _debug(`${pkg.name}:server`);
+const debug = require('debug')(`${pkg.name}:server`);
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -16,6 +17,10 @@ const server = http.createServer(app);
 server.listen(port)
 server.on('error', onError);
 server.on('listening', onListening);
+sequelize.run(sequelize.init(), {
+  force: false, 
+  seed: false
+})
 
 process.once('SIGINT', function () {
   console.log('do SIGINT')
