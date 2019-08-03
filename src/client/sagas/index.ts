@@ -8,9 +8,12 @@ import {
   ADD_EXPENSE_FAILURE, 
   FETCH_EXPENSE_REQUEST,
   FETCH_EXPENSE_SUCCESS,
-  FETCH_EXPENSE_FAILURE
+  FETCH_EXPENSE_FAILURE,
+  EDIT_EXPENSE_REQUEST,
+  EDIT_EXPENSE_SUCCESS,
+  EDIT_EXPENSE_FAILURE
 } from '../actions/types';
-import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction } from '../reducers/expense';
+import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction } from '../reducers/expense';
 import * as apis from '../apis'
 import {push} from 'connected-react-router'
 
@@ -25,6 +28,7 @@ function* expenseSaga() {
     takeLatest(FETCH_EXPENSE_LIST_REQUEST, fetchExpenseList$),
     takeLatest(FETCH_EXPENSE_REQUEST, fetchExpense$),
     takeLatest(ADD_EXPENSE_REQUEST, addExpense$),
+    takeLatest(EDIT_EXPENSE_REQUEST, editExpense$),
   ])
 }
 
@@ -53,5 +57,15 @@ function* addExpense$(action: AddExpenseAction) {
     yield put(push('/'))
   } catch {
     yield put({ type: ADD_EXPENSE_FAILURE})
+  }
+}
+
+function* editExpense$(action: EditExpenseAction) {
+  try {
+    const data = yield call(apis.editExpense, action.payload)
+    yield put({ type: EDIT_EXPENSE_SUCCESS, payload: data })
+    yield put(push('/'))
+  } catch {
+    yield put({ type: EDIT_EXPENSE_FAILURE })
   }
 }

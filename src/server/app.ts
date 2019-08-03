@@ -27,11 +27,11 @@ sequelize
   .sync({force: false})
   .then(()=> {
     console.log('db sync done!')
-    const user = new User({email: 'ej88ej@gmail.com'})
-    user.save();
+    // const user = new User({email: 'ej88ej@gmail.com'})
+    // user.save();
 
-    const expense = new Expense({amount: 8000, text: '된장찌게', userId: 1})
-    expense.save()
+    // const expense = new Expense({amount: 8000, text: '된장찌게', userId: 1})
+    // expense.save()
   })
 
 if (development) {

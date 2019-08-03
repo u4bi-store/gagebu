@@ -10,4 +10,8 @@ export const ADD_EXPENSE_REQUEST = '@expense/add/request'
 export const ADD_EXPENSE_SUCCESS = '@expense/add/success'
 export const ADD_EXPENSE_FAILURE = '@expense/add/failure'
 
+export const EDIT_EXPENSE_REQUEST = '@expense/edit/request'
+export const EDIT_EXPENSE_SUCCESS = '@expense/edit/success'
+export const EDIT_EXPENSE_FAILURE = '@expense/edit/failure'
+
 export const SET_LAYOUT = '@app/setLayout'

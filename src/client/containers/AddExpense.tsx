@@ -16,17 +16,13 @@ interface Props {
   addExpense(expense: Expense): AddExpenseAction
 }
 
-interface State {
-
-}
-
-class AddExpenseContainer extends React.Component<Props, State> {
+class AddExpenseContainer extends React.Component<Props> {
   componentDidMount() {
     this.props.setLayout({
       title: '지출 기록',
-      leftControl: <Icon type="left" onClick={() => this.props.goBack()} />
     })
   }
+
   render() {
     return <AddExpensePage {...this.props}/>
   }

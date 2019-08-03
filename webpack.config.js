@@ -12,7 +12,8 @@ module.exports = {
 
   output: {
     filename: `${TARGET}/main.js`,
-    path: path.resolve(__dirname, pkg.outputPath)
+    path: path.resolve(__dirname, pkg.outputPath),
+    publicPath: '/',
   },
 
   devtool: "source-map",
@@ -24,6 +25,7 @@ module.exports = {
     },
     open: true,
     historyApiFallback: true,
+    publicPath: '/'
   },
 
   resolve: {
@@ -68,7 +70,7 @@ module.exports = {
       template: './index.html',
       base: `/${TARGET}`,
       templateParameters: {
-        assetPath: TARGET
+        assetPath: `/${TARGET}`
       }
     })
   ],

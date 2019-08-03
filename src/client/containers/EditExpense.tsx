@@ -1,45 +1,44 @@
 import React from 'react'
-import ExpensePage from 'client/pages/Expense'
 import { Expense, Layout } from 'server/DTOModels';
 import { connect } from 'react-redux';
 import { RootState } from 'client/reducers';
-import { setLayout, fetchExpense } from 'client/actions'
+import { setLayout, fetchExpense, editExpense } from 'client/actions'
 import { match } from 'react-router';
 import { expenseSelector } from 'client/selectors';
-import { Icon, Button } from 'antd-mobile';
 import { push } from 'connected-react-router';
-import { Link } from 'react-router-dom';
+import EditExpensePage from 'client/pages/EditExpense';
+import { EditExpenseAction } from 'client/reducers/expense';
 
 interface Props {
   id: string
   expense?: Expense
   setLayout(layout: Layout): void
   fetchExpense(id: string): void
-  push(path: string): void
+  editExpense(expense: Expense): EditExpenseAction
 }
 
 
-class ExpenseContainer extends React.Component<Props> {
+class EditExpenseContainer extends React.Component<Props> {
   componentDidMount() {
-    const {id, setLayout, fetchExpense, push} = this.props
+    const {id, setLayout, fetchExpense} = this.props
     setLayout({
-      title: '지출 상세',
-      leftControl: <Icon type="left" onClick={() => push(`/`)} />,
-      rightControls: [
-        <Link to={`/expense/${id}/edit`}>편집</Link>,
-        <div>삭제</div>
-      ]
+      title: '지출 편집'
     })
     fetchExpense(id)
   }
 
   render() {
-    const {expense} = this.props
+    const {expense, editExpense} = this.props
     if (!expense) {
       return null
     }
 
-    return <ExpensePage expense={expense} />
+    return (
+      <EditExpensePage 
+        expense={expense}
+        editExpense={editExpense} 
+      />
+    )
   }
 
 }
@@ -56,5 +55,5 @@ export default connect(
       expense: expenseSelector(state, id),
     }
   },
-  {setLayout, fetchExpense, push}
-)(ExpenseContainer)
+  {setLayout, fetchExpense, editExpense, push}
+)(EditExpenseContainer)

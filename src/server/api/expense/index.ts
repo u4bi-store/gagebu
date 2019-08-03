@@ -43,4 +43,22 @@ router.post('/', async (req: Request, res: Response) => {
   res.status(201).json(expense)
 }) 
 
+router.put('/:id', async (req: Request, res: Response) => {
+  const id = req.params.id
+  if (!id) return res.sendStatus(404)
+
+  const {amount, text, date} = req.body
+
+  try {
+    const expense = await Expense.update({
+      amount, 
+      text, 
+      date,
+    }, {where: {id}})
+    res.json(expense)
+  } catch {
+    res.sendStatus(500)
+  }
+})
+
 export default router

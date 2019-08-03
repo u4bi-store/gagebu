@@ -39,7 +39,7 @@ class ExpenseListContainer extends React.Component<Props, State> {
       title: '2019년 7월 지출',
       rightControls: [
         <Icon key="0" type="plus" onClick={() =>
-          this.props.push('/add')
+          this.props.push('/expense/add')
         } />
       ]
     })

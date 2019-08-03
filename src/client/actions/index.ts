@@ -1,5 +1,5 @@
 import * as types from './types'
-import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction } from 'client/reducers/expense';
+import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction } from 'client/reducers/expense';
 import { Expense, Layout } from 'server/DTOModels'
 import { SetLayoutAction } from 'client/reducers/app';
 
@@ -14,6 +14,11 @@ export const fetchExpense = (id: string): FetchExpenseAction => ({
 
 export const addExpense = (expense: Expense): AddExpenseAction => ({
   type: types.ADD_EXPENSE_REQUEST,
+  payload: expense
+})
+
+export const editExpense = (expense: Expense): EditExpenseAction => ({
+  type: types.EDIT_EXPENSE_REQUEST,
   payload: expense
 })
 

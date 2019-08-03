@@ -47,7 +47,7 @@ const ExpenseListPage: React.FC<ExpensePageProps> = props => {
               extra={currency(expense.amount) + '원'}
               align="top"
               multipleLine
-              onClick={() => push(`/${expense.id}`)}
+              onClick={() => push(`/expense/${expense.id}`)}
             >
               {expense.text}
             </List.Item>
