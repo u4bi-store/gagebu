@@ -19,4 +19,12 @@ export interface Layout {
   title: string 
   leftControl?: React.ReactElement
   rightControls?: React.ReactElement[]
+  dialog?: Dialog
+}
+
+export interface Dialog {
+  title: string
+  body: string 
+  confirmText?: string
+  calcelText?: string
 }

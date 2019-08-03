@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as models from 'server/DTOModels'
-import { NavBar } from 'antd-mobile';
+import { NavBar, Modal } from 'antd-mobile';
+import DialogContainer from '../../containers/dialog'
 
 interface Props {
   layout: models.Layout
@@ -9,6 +10,7 @@ interface Props {
 const Layout: React.FC<Props> = ({layout, children}) => {
   return (
     <React.Fragment>
+      <DialogContainer />
       <NavBar
         mode="dark"
         icon={layout.leftControl}

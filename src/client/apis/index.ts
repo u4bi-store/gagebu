@@ -12,3 +12,6 @@ export const addExpense = (expense: Expense) =>
 
 export const editExpense = (expense: Expense) => 
   superagent.put(`/api/expenses/${expense.id}`).send(expense).then(res => res.body)
+
+export const deleteExpense = (id: string) =>
+  superagent.delete(`/api/expenses/${id}`).then(res => res.body)

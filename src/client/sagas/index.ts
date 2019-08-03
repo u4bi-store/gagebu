@@ -1,4 +1,4 @@
-import {all, call, fork, takeLatest, put} from 'redux-saga/effects'
+import {all, call, fork, takeLatest, put, take, race} from 'redux-saga/effects'
 import { 
   FETCH_EXPENSE_LIST_REQUEST, 
   FETCH_EXPENSE_LIST_FAILURE, 
@@ -11,11 +11,19 @@ import {
   FETCH_EXPENSE_FAILURE,
   EDIT_EXPENSE_REQUEST,
   EDIT_EXPENSE_SUCCESS,
-  EDIT_EXPENSE_FAILURE
+  EDIT_EXPENSE_FAILURE,
+  SHOW_DIALOG,
+  DELETE_EXPENSE_REQUEST,
+  DELETE_EXPENSE_SUCCESS,
+  DELETE_EXPENSE_FAILURE,
+  CONFRIM_DIALOG,
+  CANCEL_DIALOG
 } from '../actions/types';
-import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction } from '../reducers/expense';
+import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction, DeleteExpenseAction } from '../reducers/expense';
 import * as apis from '../apis'
 import {push} from 'connected-react-router'
+import { ShowDialogAction } from 'client/reducers/app';
+import { Dialog } from 'server/DTOModels';
 
 export default function* rootSaga() {
   yield all([
@@ -23,12 +31,14 @@ export default function* rootSaga() {
   ])
 }
 
+
 function* expenseSaga() {
   yield all([
     takeLatest(FETCH_EXPENSE_LIST_REQUEST, fetchExpenseList$),
     takeLatest(FETCH_EXPENSE_REQUEST, fetchExpense$),
     takeLatest(ADD_EXPENSE_REQUEST, addExpense$),
     takeLatest(EDIT_EXPENSE_REQUEST, editExpense$),
+    takeLatest(DELETE_EXPENSE_REQUEST, deleteExpense$),
   ])
 }
 
@@ -67,5 +77,29 @@ function* editExpense$(action: EditExpenseAction) {
     yield put(push('/'))
   } catch {
     yield put({ type: EDIT_EXPENSE_FAILURE })
+  }
+}
+
+function* deleteExpense$(action: DeleteExpenseAction) {
+  try {
+    const dialog: Dialog = {
+      title: '지출 삭제',
+      body: '지출 항목을 삭제할까요?'
+    }
+    yield put({type: SHOW_DIALOG, payload: dialog})
+
+    const {confirm} = yield race({
+      confirm: take(CONFRIM_DIALOG),
+      cancel: take(CANCEL_DIALOG),
+    })
+
+    if (confirm) {
+      const id = action.payload
+      yield call(apis.deleteExpense, id)
+      yield put({ type: DELETE_EXPENSE_SUCCESS, payload: id })
+      yield put(push('/'))
+    }
+  } catch {
+    yield put({ type: DELETE_EXPENSE_FAILURE })
   }
 }

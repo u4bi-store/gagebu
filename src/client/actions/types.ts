@@ -14,4 +14,13 @@ export const EDIT_EXPENSE_REQUEST = '@expense/edit/request'
 export const EDIT_EXPENSE_SUCCESS = '@expense/edit/success'
 export const EDIT_EXPENSE_FAILURE = '@expense/edit/failure'
 
+export const DELETE_EXPENSE_REQUEST = '@expense/delete/request'
+export const DELETE_EXPENSE_SUCCESS = '@expense/delete/success'
+export const DELETE_EXPENSE_FAILURE = '@expense/delete/failure'
+
+
 export const SET_LAYOUT = '@app/setLayout'
+
+export const SHOW_DIALOG = '@app/dialog/show'
+export const CONFRIM_DIALOG = '@app/dialog/confirm'
+export const CANCEL_DIALOG = '@app/dialog/cancel'

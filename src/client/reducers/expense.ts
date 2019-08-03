@@ -44,6 +44,15 @@ export interface EditExpenseSuccessAction {
   payload: Expense
 }
 
+export interface DeleteExpenseAction {
+  type: typeof types.DELETE_EXPENSE_REQUEST,
+  payload: string
+}
+
+export interface DeleteExpenseSuccessAction {
+  type: typeof types.DELETE_EXPENSE_SUCCESS,
+  payload: string
+}
 
 export type ExpenseActions = FetchExpenseListAction 
   | FetchExpenseListSuccessAction
@@ -53,6 +62,8 @@ export type ExpenseActions = FetchExpenseListAction
   | AddExpenseSuccessAction
   | EditExpenseAction
   | EditExpenseSuccessAction
+  | DeleteExpenseAction
+  | DeleteExpenseSuccessAction
 
 
 const expenseReducer = (state = initialState, action: ExpenseActions): ExpenseState => {
@@ -90,6 +101,13 @@ const expenseReducer = (state = initialState, action: ExpenseActions): ExpenseSt
           return item.id === expense.id 
             ? {...expense}
             : item
+        })
+      }
+    case types.DELETE_EXPENSE_SUCCESS:
+      if (action.payload) {
+        const id = parseInt(action.payload as string, 0)
+        return state.filter(item => {
+          return item.id === id
         })
       }
     default: 

@@ -61,4 +61,13 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 })
 
+router.delete('/:id', async (req: Request, res: Response) => {
+  const id = req.params.id
+  if (!id) return res.sendStatus(404)
+
+  await Expense.destroy({ where: {id}})
+  res.sendStatus(204)
+
+})
+
 export default router
