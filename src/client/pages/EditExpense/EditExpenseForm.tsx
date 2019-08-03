@@ -13,7 +13,7 @@ interface State {
   id?: number
   amount: string
   text: string
-  date?: string
+  date?: Date
 }
 
 
@@ -28,18 +28,26 @@ class EditExpenseForm extends React.Component<Props, State> {
         id: props.initialValue.id,
         amount: props.initialValue.amount.toString(),
         text: props.initialValue.text,
-        date: moment(props.initialValue.date).format(this.DATE_FORMAT)
+        date: moment(props.initialValue.date).toDate()
       }
     } else {
       this.state = {
         amount: '',
         text: '',
-        date: moment().format(this.DATE_FORMAT)
+        date: new Date()
       }
     }
   }
 
   handleChange = (target: 'amount' | 'text' | 'date') => (val: string) => {
+    if (target === 'date') {
+      this.setState(state => ({
+        ...state,
+        [target]: moment(val).toDate()
+      }))
+      return 
+    }
+
     this.setState(state => ({
       ...state,
       [target]: val
@@ -53,8 +61,11 @@ class EditExpenseForm extends React.Component<Props, State> {
       id,
       amount: parseInt(amount),
       text,
-      date,
     }
+    if (date) {
+      expense.date = date.toISOString()
+    }
+
     submit && submit(expense)
   }
 
@@ -83,7 +94,7 @@ class EditExpenseForm extends React.Component<Props, State> {
           <InputItem
             placeholder="지출 날짜"
             type="text"
-            value={this.state.date}
+            value={moment(this.state.date).format(this.DATE_FORMAT)}
             disabled={readonly}
             onChange={this.handleChange('date')}
           >날짜 </InputItem>
