@@ -6,7 +6,7 @@ import { WingBlank, WhiteSpace, List, InputItem, Button } from 'antd-mobile';
 
 interface Props {
   initialValue?: Expense
-  submit(expense: Expense): AddExpenseAction | EditExpenseAction
+  submit?(expense: Expense): AddExpenseAction | EditExpenseAction
 }
 
 interface State {
@@ -47,6 +47,7 @@ class EditExpenseForm extends React.Component<Props, State> {
   }
 
   handleSubmit = () => {
+    const {submit} = this.props
     const {id, amount, text, date} = this.state
     const expense: Expense  =  {
       id,
@@ -54,10 +55,13 @@ class EditExpenseForm extends React.Component<Props, State> {
       text,
       date,
     }
-    this.props.submit(expense)
+    submit && submit(expense)
   }
 
   render() {
+    const {submit} = this.props
+    const readonly: boolean = !submit
+
     return (
       <WingBlank>
         <WhiteSpace />
@@ -66,23 +70,28 @@ class EditExpenseForm extends React.Component<Props, State> {
             placeholder="지출 금액"
             type="digit"
             value={this.state.amount}
+            disabled={readonly}
             onChange={this.handleChange('amount')}
           >금액</InputItem>
           <InputItem
             placeholder="지출 내용"
             type="text"
             value={this.state.text}
+            disabled={readonly}
             onChange={this.handleChange('text')}
           >내용</InputItem>
           <InputItem
             placeholder="지출 날짜"
             type="text"
             value={this.state.date}
+            disabled={readonly}
             onChange={this.handleChange('date')}
           >날짜 </InputItem>
-          <List.Item>
-            <Button type="primary" onClick={this.handleSubmit}>저장</Button>
-          </List.Item>
+          {!readonly && 
+            <List.Item>
+              <Button type="primary" onClick={this.handleSubmit}>저장</Button>
+            </List.Item>
+          }
         </List>
       </WingBlank>
     )

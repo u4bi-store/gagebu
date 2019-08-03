@@ -26,7 +26,7 @@ class ExpenseContainer extends React.Component<Props> {
       title: '지출 상세',
       leftControl: <Icon type="left" onClick={() => push(`/`)} />,
       rightControls: [
-        <Link to={`/expense/${id}/edit`}>편집</Link>,
+        <Link style={{color: 'white', marginRight: '8px'}} to={`/expense/${id}/edit`}>편집</Link>,
         <div>삭제</div>
       ]
     })

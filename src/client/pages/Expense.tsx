@@ -1,5 +1,6 @@
 import React from 'react'
 import { Expense } from 'server/DTOModels';
+import EditExpenseForm from './EditExpense/EditExpenseForm';
 
 interface Props {
   expense: Expense
@@ -7,7 +8,7 @@ interface Props {
 
 const ExpensePage: React.FC<Props> = ({expense}) => {
   return (
-    <div>expense Page: {expense && expense.id}</div>
+    <EditExpenseForm initialValue={expense}/>
   )
 }
 
