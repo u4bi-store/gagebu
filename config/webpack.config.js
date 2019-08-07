@@ -2,37 +2,22 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const pkg = require('./package.json')
+const pkg = require('../package.json')
 const TARGET = pkg.assetPath
 
 module.exports = {
   mode: 'development',
-
   entry: './src/client/index',
-
+  devtool: "source-map",
   output: {
     filename: `${TARGET}/main.js`,
-    path: path.resolve(__dirname, pkg.outputPath),
+    path: path.resolve(__dirname, '..', pkg.outputPath),
     publicPath: '/',
   },
-
-  devtool: "source-map",
-
-  devServer:{
-    contentBase: TARGET,
-    proxy: {
-      '/api': 'http://localhost:3000'
-    },
-    open: true,
-    historyApiFallback: true,
-    publicPath: '/'
-  },
-
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     modules: ['./src', 'node_modules'],
   },
-
   module: {
     rules: [
       { 
@@ -44,7 +29,6 @@ module.exports = {
       }
     ]
   },
-
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([{
@@ -65,22 +49,25 @@ module.exports = {
     }, {
       from: './node_modules/antd-mobile/dist/antd-mobile.min.js',
       to: `./${TARGET}/antd-mobile.min.js`
+    }, {
+      from: './node_modules/moment/min/moment.min.js',
+      to: `./${TARGET}/moment.min.js`
     }]),
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, '../src/client/index.html'),
       base: `/${TARGET}`,
       templateParameters: {
         assetPath: `/${TARGET}`
       }
     })
   ],
-
   externals: [
     {
       'react': 'React',
       'react-dom': 'ReactDOM',
       'superagent': 'superagent',
       'antd-mobile': 'window["antd-mobile"]',
+      'moment': 'moment',
     },
   ]
 }

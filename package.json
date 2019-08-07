@@ -6,11 +6,11 @@
   "scripts": {
     "start": "npm run build && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && tsc --project tsconfig-server.json",
+    "build": "webpack --config config/webpack.config.prod.js && tsc --project tsconfig-server.json",
     "server": "NODE_ENV=poduction node dist/bin/www",
     "dev": "concurrently 'nodemon' 'npm run dev:client'",
     "dev:server": "DEBUG=gagebu:* node --inspect=5858 -r ts-node/register ./src/bin/www.ts",
-    "dev:client": "webpack-dev-server"
+    "dev:client": "webpack-dev-server --config config/webpack.config.dev.js"
   },
   "keywords": [],
   "author": "",
