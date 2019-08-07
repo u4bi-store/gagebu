@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import http from 'http'
-import app  from './app';
+import app  from '../app';
 import { AddressInfo } from 'net';
-import * as sequelize from './config/sequelize'
+import * as sequelize from '../config/sequelize'
 
 const pkg = require('../../package.json')
 

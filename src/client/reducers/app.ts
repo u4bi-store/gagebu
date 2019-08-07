@@ -1,4 +1,4 @@
-import { Layout, Dialog } from 'server/DTOModels';
+import { Layout, Dialog } from 'DTOModels';
 import * as types from 'client/actions/types'
 
 export interface AppState { 

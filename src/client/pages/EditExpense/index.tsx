@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Expense } from 'server/DTOModels';
+import { Expense } from 'DTOModels';
 import EditExpenseForm from './EditExpenseForm';
 import { EditExpenseAction } from 'client/reducers/expense';
 

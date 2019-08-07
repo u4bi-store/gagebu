@@ -1,5 +1,5 @@
 import React from 'react'
-import { Expense } from 'server/DTOModels';
+import { Expense } from 'DTOModels';
 import { AddExpenseAction, EditExpenseAction } from 'client/reducers/expense';
 import moment = require('moment');
 import { WingBlank, WhiteSpace, List, InputItem, Button } from 'antd-mobile';

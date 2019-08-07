@@ -1,8 +1,8 @@
 import React from 'react'
-import * as models from '../../server/DTOModels';
-import Dialog from '../components/Layout/Dialog'
+import * as models from 'DTOModels';
+import Dialog from 'client/components/Layout/Dialog'
 import { connect } from 'react-redux';
-import {RootState} from '../reducers'
+import { RootState } from 'client/reducers'
 import {confirmDialog, cancelDialog} from 'client/actions'
 import { ConfirmDialogAction, CancelDialogAction } from 'client/reducers/app';
 

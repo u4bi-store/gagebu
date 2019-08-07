@@ -1,5 +1,5 @@
 import React from 'react'
-import { Expense, Layout } from 'server/DTOModels';
+import { Expense, Layout } from 'DTOModels';
 import { connect } from 'react-redux';
 import { RootState } from 'client/reducers';
 import { setLayout, fetchExpense, editExpense } from 'client/actions'

@@ -1,7 +1,6 @@
 import React from 'react'
-import * as models from 'server/DTOModels';
+import * as models from 'DTOModels';
 import { Modal } from 'antd-mobile';
-import { ConfirmDialogAction, CancelDialogAction } from 'client/reducers/app';
 
 interface Props {
   dialog: models.Dialog

@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { User } from '../models/User';
 import { Expense } from '../models/Expense';
 
-const pkg = require('../../../package.json')
+const pkg = require('../../package.json')
 const debug = require('debug')(`${pkg.name}:sequelize`)
 
 export const init = (): Sequelize => {

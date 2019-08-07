@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {RootState} from '../reducers';
-import * as models from 'server/DTOModels'
+import { RootState } from 'client/reducers';
+import * as models from 'DTOModels'
 import Layout from 'client/components/Layout'
 
 interface Props {

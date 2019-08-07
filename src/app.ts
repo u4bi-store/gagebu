@@ -6,12 +6,9 @@ import homeRouter from './controllers/home'
 
 const app: express.Application = express()
 const env: string = process.env.NODE_ENV || 'development'
-const development = env === 'development'
-const pkg = development 
-  ? require(path.resolve(__dirname, '../../package.json'))
-  : require(path.resolve(__dirname, '../package.json'))
+const pkg = require(path.resolve(__dirname, '../package.json'))
 
-if (development) {
+if (env === 'development') {
   app.use(morgan('dev'))
 }
 

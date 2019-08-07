@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
-import LayoutContainer from '../containers/Layout';
-import ExpenseListContainer from '../containers/ExpenseList';
-import ExpenseContainer from '../containers/Expense';
-import AddExpenseContainer from '../containers/AddExpense';
-import EditExpenseContainer from '../containers/EditExpense';
+import LayoutContainer from 'client/containers/Layout';
+import ExpenseListContainer from 'client/containers/ExpenseList';
+import ExpenseContainer from 'client/containers/Expense';
+import AddExpenseContainer from 'client/containers/AddExpense';
+import EditExpenseContainer from 'client/containers/EditExpense';
 import { ConnectedRouter } from 'connected-react-router';
-import { history } from '../store/configureStore';
+import { history } from 'client/store/configureStore';
 
 
 const RootRouter: React.FC = props => {

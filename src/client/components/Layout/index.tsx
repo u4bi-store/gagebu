@@ -1,7 +1,7 @@
 import * as React from 'react'
-import * as models from 'server/DTOModels'
-import { NavBar, Modal } from 'antd-mobile';
-import DialogContainer from '../../containers/dialog'
+import * as models from 'DTOModels'
+import { NavBar } from 'antd-mobile';
+import DialogContainer from 'client/containers/dialog'
 
 interface Props {
   layout: models.Layout

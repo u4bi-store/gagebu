@@ -1,11 +1,11 @@
 import * as React from 'react'
 import request from 'superagent'
-import { User, DailyExpense, Expense, Layout } from 'server/DTOModels';
+import { User, Expense, Layout } from 'DTOModels';
 import ExpenseListPage from 'client/pages/ExpenseList';
 import { connect } from 'react-redux';
-import { RootState } from '../reducers';
-import { fetchExpenseList, setLayout } from '../actions'
-import { FetchExpenseListAction } from '../reducers/expense';
+import { RootState } from 'client/reducers';
+import { fetchExpenseList, setLayout } from 'client/actions'
+import { FetchExpenseListAction } from 'client/reducers/expense';
 import { Icon } from 'antd-mobile';
 import { push  } from "connected-react-router";
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { AddExpenseAction } from '../reducers/expense';
-import { Expense } from 'server/DTOModels';
+import { AddExpenseAction } from 'client/reducers/expense';
+import { Expense } from 'DTOModels';
 import EditExpenseForm from './EditExpense/EditExpenseForm';
 
 interface Props {
