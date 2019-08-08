@@ -22,7 +22,7 @@ import {
 import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction, DeleteExpenseAction } from 'client/reducers/expense';
 import * as apis from 'client/apis'
 import {push} from 'connected-react-router'
-import { Dialog } from 'DTOModels';
+import { Dialog } from 'dto';
 
 export default function* rootSaga() {
   yield all([

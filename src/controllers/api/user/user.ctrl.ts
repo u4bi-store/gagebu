@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User } from  '../../../DTOModels/index'
+import { User } from  '../../../dto/index'
 
 export const me = async (req: Request, res: Response) => {
   const user: User = {

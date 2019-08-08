@@ -1,5 +1,5 @@
 import React from 'react'
-import { Expense } from 'DTOModels';
+import { Expense } from 'dto';
 import EditExpenseForm from './EditExpense/EditExpenseForm';
 
 interface Props {

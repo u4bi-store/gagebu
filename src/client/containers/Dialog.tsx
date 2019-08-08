@@ -1,5 +1,5 @@
 import React from 'react'
-import * as models from 'DTOModels';
+import * as models from 'dto';
 import Dialog from 'client/components/Layout/Dialog'
 import { connect } from 'react-redux';
 import { RootState } from 'client/reducers'

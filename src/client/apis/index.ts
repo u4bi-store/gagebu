@@ -1,5 +1,5 @@
 import superagent from 'superagent'
-import { Expense } from 'DTOModels';
+import { Expense } from 'dto';
 
 export const fetchExpenseList = () => 
   superagent.get('/api/expenses').then(res => res.body)

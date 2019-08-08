@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import http from 'http'
-import app  from '../app';
+import app  from '..';
 import { AddressInfo } from 'net';
 import * as sequelize from '../config/sequelize'
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { WingBlank,  List, Flex } from 'antd-mobile';
 import moment from 'moment';
-import { Expense, DailyExpense } from 'DTOModels';
+import { Expense, DailyExpense } from 'dto';
 import { currency } from 'utils'
 
 interface ExpensePageProps {

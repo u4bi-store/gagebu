@@ -1,16 +1,23 @@
 import { Request, Response } from 'express'
 import { Expense } from '../../../models/Expense';
+import { Controller } from '../http'
 
-export const query = async (req: Request, res: Response) => {
-  const offset = parseInt(req.query.offset || '0', 10)
-  const limit = parseInt(req.query.limit || '20', 10)
+interface QueryOptions {
+  offset: string;
+  limit: string;
+}
+
+export const query: Controller<QueryOptions> = async (options: QueryOptions) => {
+  const offset = parseInt(options.offset || '0', 10)
+  const limit = parseInt(options.limit || '20', 10)
 
   const expenses: Expense[] = await Expense.findAll({
     limit,
     offset,
     order: [['date', 'DESC']]
   })
-  res.json(expenses)
+  
+  return expenses
 }
 
 export const show = async (req: Request, res: Response) => {

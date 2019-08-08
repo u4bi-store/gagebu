@@ -1,6 +1,6 @@
 import * as types from './types'
 import { FetchExpenseListAction, AddExpenseAction, FetchExpenseAction, EditExpenseAction, DeleteExpenseAction } from 'client/reducers/expense';
-import { Expense, Layout } from 'DTOModels'
+import { Expense, Layout } from 'dto'
 import { SetLayoutAction, ConfirmDialogAction, CancelDialogAction } from 'client/reducers/app';
 
 

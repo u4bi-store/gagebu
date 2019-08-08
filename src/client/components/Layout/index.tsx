@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as models from 'DTOModels'
+import * as models from 'dto'
 import { NavBar } from 'antd-mobile';
 import DialogContainer from 'client/containers/dialog'
 

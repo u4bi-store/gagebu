@@ -1,5 +1,5 @@
 import { RootState } from "client/reducers";
-import { Expense } from "DTOModels";
+import { Expense } from "dto";
 
 export const expenseSelector = (state: RootState, id: string): Expense | undefined => {
   const expenseId = parseInt(id, 10)
