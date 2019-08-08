@@ -10,6 +10,7 @@
     "server": "NODE_ENV=poduction node dist/bin/www",
     "dev": "concurrently 'nodemon' 'npm run dev:client'",
     "dev:server": "DEBUG=gagebu:* node --inspect=5858 -r ts-node/register ./src/bin/www.ts",
+    "dev:server:watch": "nodemon",
     "dev:client": "webpack-dev-server --config config/webpack.config.dev.js"
   },
   "keywords": [],
@@ -25,7 +26,7 @@
       "node_modules"
     ],
     "watch": [
-      "./src/server"
+      "./src"
     ],
     "exec": "npm run dev:server",
     "ext": "ts"

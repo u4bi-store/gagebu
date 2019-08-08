@@ -1,23 +1,23 @@
 import { Request, Response } from 'express'
 import { Expense } from '../../../models/Expense';
-import { Controller } from '../http'
+import expenseService from '../../../services/expenseService';
+import {Controller} from '../http2';
 
-interface QueryOptions {
-  offset: string;
-  limit: string;
+interface QueryControllerServices {
+  expenseService: typeof expenseService
 }
 
-export const query: Controller<QueryOptions> = async (options: QueryOptions) => {
-  const offset = parseInt(options.offset || '0', 10)
-  const limit = parseInt(options.limit || '20', 10)
+export class QueryController extends Controller<QueryControllerServices> {
+  constructor(services: QueryControllerServices) {
+    super(services)
+  }
+  async run(options: any) {
+    const limit = parseInt(options.limit || '20', 10)
+    const offset = parseInt(options.offset || '0', 10)
 
-  const expenses: Expense[] = await Expense.findAll({
-    limit,
-    offset,
-    order: [['date', 'DESC']]
-  })
-  
-  return expenses
+    const {expenseService} = this.services
+    return await expenseService.query(limit, offset)
+  }
 }
 
 export const show = async (req: Request, res: Response) => {

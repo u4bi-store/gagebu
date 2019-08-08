@@ -1,9 +1,10 @@
 import {Response, Request, NextFunction} from 'express'
-export interface Controller<T = any> {
-  (options: T): Promise<any>
+
+export interface Controller {
+  (options: any, services: any): Promise<any>
 }
 
-const http = (controller: Controller) => 
+const http = (controller: Controller, services: any) => 
 async (req: Request, res: Response, next: NextFunction) => {
   const options = {
     ...req.params,
@@ -12,7 +13,7 @@ async (req: Request, res: Response, next: NextFunction) => {
   }
   
   try {
-    const result = await controller(options);
+    const result = await controller(options, services);
     res.json(result);
   } catch (err) {
     next(err);
@@ -20,3 +21,5 @@ async (req: Request, res: Response, next: NextFunction) => {
 }
 
 export default http;
+
+
