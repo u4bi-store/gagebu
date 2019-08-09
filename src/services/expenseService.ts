@@ -15,6 +15,31 @@ const expenseService = {
     return await Expense.findOne({
       where: { id }
     })
+  },
+
+  async create (amount: number, text: string, date: number, userId: number): Promise<Expense> {
+    const expense: Expense = new Expense({
+      amount,
+      text,
+      date,
+      userId,
+    })
+    await expense.save();
+    return expense;
+  },
+
+  async update(id: number, amount: number, text: string, date: number): Promise<any> {
+    const expense =  await Expense.update({
+      amount,
+      text,
+      date,
+    }, { where: { id } })
+    return expense;
+  },
+
+  async destroy(id: number): Promise<void> {
+    await Expense.destroy({ where: { id }})
+    return 
   }
 }
 

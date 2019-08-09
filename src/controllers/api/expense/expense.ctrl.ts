@@ -1,14 +1,13 @@
-import { Request, Response } from 'express'
 import { Expense } from '../../../models/Expense';
 import expenseService from '../../../services/expenseService';
 import {Controller} from '../http';
 
-interface QueryControllerProps {
+interface QueryCtrlProps {
   expenseService: typeof expenseService
 }
 
-export class QueryController extends Controller<QueryControllerProps> {
-  constructor(services: QueryControllerProps) {
+export class QueryCtrl extends Controller<QueryCtrlProps> {
+  constructor(services: QueryCtrlProps) {
     super(services)
   }
   async run(options: any) {
@@ -20,12 +19,12 @@ export class QueryController extends Controller<QueryControllerProps> {
   }
 }
 
-interface ShowControllerProps {
+interface ShowCtrlProps {
   expenseService: typeof expenseService
 }
 
-export class ShowController extends Controller<ShowControllerProps> {
-  constructor(props: ShowControllerProps) {
+export class ShowCtrl extends Controller<ShowCtrlProps> {
+  constructor(props: ShowCtrlProps) {
     super(props);
   }
   async run(options: any) {
@@ -37,46 +36,59 @@ export class ShowController extends Controller<ShowControllerProps> {
   }
 }
 
-export const create = async (req: Request, res: Response) => {
-  const { text } = req.body
-  const amount = parseInt(req.body.amount, 10)
-
-  if (!text || isNaN(amount)) {
-    return res.status(400)
-  }
-
-  const expense: Expense = new Expense({
-    amount,
-    text,
-    date: new Date(),
-    userId: 1,
-  })
-  await expense.save()
-  res.status(201).json(expense)
+interface CreateCtrlProps {
+  expenseService: typeof expenseService
 }
 
-export const update = async (req: Request, res: Response) => {
-  const id = req.params.id
-  if (!id) return res.sendStatus(404)
+export class CreateCtrl extends Controller<CreateCtrlProps> {
+  constructor(props: CreateCtrlProps) {
+    super(props)
+  }
+  async run(options: any) {
+    const { text } = options
+    const amount = parseInt(options.amount, 10)
 
-  const { amount, text, date } = req.body
-
-  try {
-    const expense = await Expense.update({
-      amount,
-      text,
-      date,
-    }, { where: { id } })
-    res.json(expense)
-  } catch {
-    res.sendStatus(500)
+    if (!text || isNaN(amount)) {
+      throw {status: 400}
+    }
+    const { expenseService } = this.services
+    const expense = await expenseService.create(amount, text, Date.now(), 1);
+    return expense
   }
 }
 
-export const destory = async (req: Request, res: Response) => {
-  const id = req.params.id
-  if (!id) return res.sendStatus(404)
+interface UpdateCtrlProps {
+  expenseService: typeof expenseService
+}
 
-  await Expense.destroy({ where: { id } })
-  res.sendStatus(204)
+export class UpdateCtrl extends Controller<UpdateCtrlProps> {
+  constructor(props: UpdateCtrlProps) {
+    super(props)
+  }
+  async run(options: any) {
+    const { id } = options
+    if(!id) throw {status: 404}
+    const { amount, text, date } = options
+    const {expenseService} = this.services
+    const expense = await expenseService.update(id, amount, text, date)
+    return expense
+  }
+}
+
+interface DestroyCtrlProps {
+  expenseService: typeof expenseService
+}
+
+export class DestroyCtrl extends Controller<DestroyCtrlProps> {
+  constructor(props: DestroyCtrlProps) {
+    super(props)
+  }
+  async run(options: any) {
+    const { id } = options
+    if(!id) throw {status: 404}
+
+    const {expenseService} = this.services
+    await expenseService.destroy(id)
+    return {status: 204}
+  }
 }

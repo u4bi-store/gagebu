@@ -9,8 +9,7 @@ export abstract class Controller<S> {
   
 }
 
-// todo any -> Controller
-const http = (controller: any) => 
+const http = (controller: Controller<any>) => 
 async (req: Request, res: Response, next: NextFunction) => {
   const options = {
     ...req.params,

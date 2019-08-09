@@ -1,14 +1,14 @@
 import {Router} from 'express'
-import {QueryController, ShowController} from './expense.ctrl'
+import {QueryCtrl, ShowCtrl, CreateCtrl, UpdateCtrl, DestroyCtrl} from './expense.ctrl'
 import http from '../http';
 import expenseService from '../../../services/expenseService'
 
 const expenseRouter: Router = Router()
 
-expenseRouter.get('/', http(new QueryController({ expenseService })))
-expenseRouter.get('/:id', http(new ShowController({ expenseService })))
-// expenseRouter.post('/', ctrl.create) 
-// expenseRouter.put('/:id', ctrl.update)
-// expenseRouter.delete('/:id', ctrl.destory)
+expenseRouter.get('/', http(new QueryCtrl({ expenseService })))
+expenseRouter.get('/:id', http(new ShowCtrl({ expenseService })))
+expenseRouter.post('/', http(new CreateCtrl({ expenseService })))
+expenseRouter.put('/:id', http(new UpdateCtrl({ expenseService })))
+expenseRouter.delete('/:id', http(new DestroyCtrl({ expenseService })))
 
 export default expenseRouter
