@@ -30,6 +30,9 @@ export class ShowCtrl extends Controller<ShowCtrlProps> {
   async run(options: any) {
     const {expenseService} = this.services;
     const id = parseInt(options.id || '0', 10);
+    if (!id || isNaN(id)) {
+      throw {status: 400}
+    }
     const expense: Expense | null = await expenseService.show(id)
     if (!expense) throw {status: 404}
     return expense

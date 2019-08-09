@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && npm run server",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack --config config/webpack.config.prod.js && tsc --project tsconfig-server.json",
     "server": "NODE_ENV=poduction node dist/bin/www",
     "dev": "concurrently 'nodemon' 'npm run dev:client'",
@@ -65,14 +65,17 @@
     "ts-node": "^8.3.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.17",
     "@types/morgan": "^1.7.36",
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^4.1.1",
     "copy-webpack-plugin": "^5.0.3",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "redux-devtools-extension": "^2.13.8",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3",

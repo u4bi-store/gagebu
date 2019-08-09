@@ -3,7 +3,7 @@ import { Order } from 'sequelize/types';
 
 const expenseService = {
   async query (limit: number, offset: number, order: Order = [['date', 'DESC']]): 
-  Promise<Expense[]> {
+  Promise<Expense[] | undefined> {
     return await Expense.findAll({
       limit,
       offset,
@@ -17,7 +17,8 @@ const expenseService = {
     })
   },
 
-  async create (amount: number, text: string, date: number, userId: number): Promise<Expense> {
+  async create (amount: number, text: string, date: number, userId: number)
+  : Promise<Expense | undefined> {
     const expense: Expense = new Expense({
       amount,
       text,
