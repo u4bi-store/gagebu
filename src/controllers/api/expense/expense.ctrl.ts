@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
 import { Expense } from '../../../models/Expense';
 import expenseService from '../../../services/expenseService';
-import {Controller} from '../http2';
+import {Controller} from '../http';
 
-interface QueryControllerServices {
+interface QueryControllerProps {
   expenseService: typeof expenseService
 }
 
-export class QueryController extends Controller<QueryControllerServices> {
-  constructor(services: QueryControllerServices) {
+export class QueryController extends Controller<QueryControllerProps> {
+  constructor(services: QueryControllerProps) {
     super(services)
   }
   async run(options: any) {
@@ -20,14 +20,21 @@ export class QueryController extends Controller<QueryControllerServices> {
   }
 }
 
-export const show = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id || '0', 10)
-  const expense: Expense | null = await Expense.findOne({
-    where: { id: id }
-  })
-  if (!expense) return res.sendStatus(404)
+interface ShowControllerProps {
+  expenseService: typeof expenseService
+}
 
-  res.json(expense)
+export class ShowController extends Controller<ShowControllerProps> {
+  constructor(props: ShowControllerProps) {
+    super(props);
+  }
+  async run(options: any) {
+    const {expenseService} = this.services;
+    const id = parseInt(options.id || '0', 10);
+    const expense: Expense | null = await expenseService.show(id)
+    if (!expense) throw {status: 404}
+    return expense
+  }
 }
 
 export const create = async (req: Request, res: Response) => {

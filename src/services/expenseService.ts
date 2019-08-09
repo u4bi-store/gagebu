@@ -2,13 +2,19 @@ import { Expense } from '../models/Expense';
 import { Order } from 'sequelize/types';
 
 const expenseService = {
-  async query(limit: number, offset: number, order: Order = [['date', 'DESC']]) {
-    const expenses: Expense[] = await Expense.findAll({
+  async query (limit: number, offset: number, order: Order = [['date', 'DESC']]): 
+  Promise<Expense[]> {
+    return await Expense.findAll({
       limit,
       offset,
       order,
     })
-    return expenses
+  },
+
+  async show (id: number): Promise<Expense | null> {
+    return await Expense.findOne({
+      where: { id }
+    })
   }
 }
 

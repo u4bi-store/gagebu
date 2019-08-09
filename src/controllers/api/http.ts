@@ -1,10 +1,16 @@
 import {Response, Request, NextFunction} from 'express'
 
-export interface Controller {
-  (options: any, services: any): Promise<any>
+export abstract class Controller<S> {
+  services: S
+  constructor(services: S) {
+    this.services = services
+  }
+  abstract run(options: any): any;
+  
 }
 
-const http = (controller: Controller, services: any) => 
+// todo any -> Controller
+const http = (controller: any) => 
 async (req: Request, res: Response, next: NextFunction) => {
   const options = {
     ...req.params,
@@ -13,13 +19,16 @@ async (req: Request, res: Response, next: NextFunction) => {
   }
   
   try {
-    const result = await controller(options, services);
+    const result = await controller.run(options);
     res.json(result);
   } catch (err) {
+    const {status} = err;
+    if (status && status >= 400 || status < 500) {
+      res.sendStatus(status);
+      return;
+    }
     next(err);
   }
 }
 
 export default http;
-
-
