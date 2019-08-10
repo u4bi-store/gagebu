@@ -28,11 +28,16 @@ class ExpenseListContainer extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    // xxxxxx
+    // TODO saga
     request.get('/api/users/me').then(res => {
       this.setState({
         user: res.body
       })
+    }).catch(err => {
+      console.log(err)
+      if (err.status === 401) {
+        window.location.replace(`/login?returnUrl=${encodeURIComponent(window.location.href)}`)
+      }
     })
 
     this.props.setLayout({

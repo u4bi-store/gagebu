@@ -1,8 +1,8 @@
-import { Router } from "express";
+import express, { Router } from "express";
 import * as ctrl from './user.ctrl'
 
 const userRouter = Router()
 
-userRouter.use('/me', ctrl.me)
+userRouter.get('/me', ctrl.me)
 
 export default userRouter
