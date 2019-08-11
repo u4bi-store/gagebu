@@ -9,7 +9,7 @@ module.exports = {
   devServer:{
     contentBase: TARGET,
     proxy: [{
-      context: ['/api', '/login', '/login-done', '/logout'],
+      context: ['/api', '/auth/login'],
       target: 'http://localhost:3000'
     }],
     open: true,
