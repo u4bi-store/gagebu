@@ -1,6 +1,8 @@
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { Application } from 'express';
+import {findUserByName} from '../services/userService'
+import {User} from '../models/User'
 
 const setupPassport = (app: Application) => {
   passport.serializeUser(function (user, done) {
@@ -13,15 +15,17 @@ const setupPassport = (app: Application) => {
 
   passport.use(new LocalStrategy(
     function (username: string, password: string, done: Function) {
-      // todo Users 서비스 대체 
-      const allowedUser = {
-        username: 'test',
-        password: 'test1234',
-      }
-      if (username === allowedUser.username && password === allowedUser.password) {
-        return done(null, allowedUser)
-      }
-      done(null, false)
+      findUserByName(username)
+        .then((user: User | null) => {
+          // todo password checking
+          if (user && user.email === username) {
+            return done(null, user)
+          }
+          done(null, false)
+        })
+        .catch(err => {
+          done(err)
+        })
     }
   ))
 
