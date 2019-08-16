@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction} from 'express'
 import passport from 'passport'
+import { User } from 'models/User';
+import { IVerifyOptions } from 'passport-local';
+const debug = require('debug')('gagebu:auth.ctrl')
 
 const DEFAULT_REDIRECT_PATH = `/login-done`
 
@@ -10,14 +13,19 @@ export const loginPage = (req: Request, res: Response) => {
 };
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', (err, user, info) => {
+  debug('login start')
+
+  passport.authenticate('local', (err: Error, user: User, info: IVerifyOptions) => {
     if (err) return next(err);
 
     const { returnUrl } = req.body
+    debug('user', user)
     if (!user) {
       const url = `/auth/login?returnUrl=${encodeURIComponent(returnUrl || DEFAULT_REDIRECT_PATH)}`
       return res.redirect(url)
     }
+    
+    debug('userFound', user)
 
     req.logIn(user, err => {
       if (err) return next(err);
@@ -31,6 +39,6 @@ export const logout = (req: Request, res: Response) => {
   res.send('logout done')
 };
 
-export const logoutPage = (req: Request, res: Response) => {
-  res.json(req.user)
+export const loginDone = (req: Request, res: Response) => {
+  res.json({ user: req.user })
 }

@@ -6,8 +6,9 @@ html(lang="ko")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title 로그인
   body
-    form(action="/auth/login", method="post")
+    form(action="/login", method="POST")
       input(type="text", name="username" placeholder="email")
       input(type="password", name="password", placeholder="password")
       input(type="hidden", name="returnUrl", value=returnUrl)
       button(type="submit") 로그인 
+    div= error
