@@ -1,56 +1,63 @@
 import passport from 'passport'
-// import { Strategy as LocalStrategy } from 'passport-local'
-import passportLocal from "passport-local";
-const LocalStrategy = passportLocal.Strategy;
-import { Request, Response, NextFunction } from 'express';
-import {findUserByName} from '../services/userService'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { Request, Response, NextFunction, Application } from 'express';
 import {User} from '../models/User'
+import Debug from 'debug'
 
-const debug = require('debug')('gagebu:passport')
+const debug = Debug('gagebu:passport')
 
-passport.serializeUser<any, any>((user, done) => {
-  debug('serializeUser')
-  done(null, user.id);
-});
+export const init = (app: Application) => {
+  debug('init')
+  
+  passport.serializeUser<any, any>((user, done) => {
+    debug('serializeUser')
 
-passport.deserializeUser((id: number, done) => {
-  debug('deserializeUser')
-  User.findByPk(id).then((user: User | null) => {
-    done(null, user);
-  }).catch((err: any) => {
-    done(err)
-  })
-});
+    done(null, user.id);
+  });
 
-debug('init')
+  passport.deserializeUser((id: number, done) => {
+    debug('deserializeUser')
 
-passport.use(new LocalStrategy(
-  {},
-  (username: string, password: string, done: Function) => {
-    debug('LocalStrategy')
-    findUserByName(username)
-      .then((user: User | null) => {
-        if (!user) {
-          return done(undefined, false, { message: `Email ${username} not found.` });
-        }
-        
-        // todo password checking
-        if (user.email === username) {
-          return done(null, user);
-        }
+    User.findByPk(id).then((user: User | null) => {
+      done(null, user);
+    }).catch((err: any) => {
+      done(err)
+    })
+  });
 
-        done(null, false)
-      })
-      .catch(err => {
-        done(err)
-      })
-  }
-))
+  passport.use(new LocalStrategy(
+    (username: string, password: string, done: Function) => {
+      debug('LocalStrategy')
+
+      User.findOne({where: {email: username}})
+        .then((user: User | null) => {
+          if (!user) {
+            return done(undefined, false, { message: `Email ${username} not found.` });
+          }
+
+          // todo password checking
+          if (user.email === username) {
+            return done(null, user);
+          }
+
+          done(null, false)
+        })
+        .catch(err => {
+          done(err)
+        })
+    }
+  ))
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+}
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   debug('isAuthenticated', req.isAuthenticated())
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect("/auth/login");
+
+  const returnUrl = encodeURIComponent(req.url)
+  res.redirect(`/login?returnUrl=${returnUrl}`);
 };
