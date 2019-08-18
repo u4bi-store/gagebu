@@ -36,7 +36,8 @@ class ExpenseListContainer extends React.Component<Props, State> {
     }).catch(err => {
       console.log(err)
       if (err.status === 401) {
-        window.location.replace(`/auth/login?returnUrl=${encodeURIComponent(window.location.href)}`)
+        // window.location.replace(`/auth/login?returnUrl=${encodeURIComponent(window.location.href)}`)
+        alert(err.status)
       }
     })
 

@@ -53,11 +53,12 @@ export const init = (app: Application) => {
 }
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  
   debug('isAuthenticated', req.isAuthenticated())
+  
   if (req.isAuthenticated()) {
     return next();
   }
 
-  const returnUrl = encodeURIComponent(req.url)
-  res.redirect(`/login?returnUrl=${returnUrl}`);
+  res.sendStatus(401)
 };
