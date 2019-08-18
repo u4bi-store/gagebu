@@ -1,4 +1,4 @@
-const defaultConfig = require('./webpack.config')
+const defaultConfig = require('./webpack.config.base')
 const pkg = require('../package.json')
 const TARGET = pkg.assetPath
 const proxyHost = 'http://localhost:3000'
@@ -9,7 +9,7 @@ module.exports = {
   devServer:{
     contentBase: TARGET,
     proxy: [{
-      context: ['/api', '/auth/login'],
+      context: ['/api', '/auth'],
       target: 'http://localhost:3000'
     }],
     open: true,
