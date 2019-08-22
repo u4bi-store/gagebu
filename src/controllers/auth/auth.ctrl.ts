@@ -5,7 +5,6 @@ import Debug from 'debug'
 const debug = Debug('gagebu:controllers:user')
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
-
   debug('postLogin', req.body)
 
   passport.authenticate('local', (err: Error, user: any, info: IVerifyOptions) => {

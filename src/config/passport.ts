@@ -10,13 +10,12 @@ export const init = (app: Application) => {
   debug('init')
   
   passport.serializeUser<any, any>((user, done) => {
-    debug('serializeUser')
-
+    debug('serializeUser', user)
     done(null, user.id);
   });
 
   passport.deserializeUser((id: number, done) => {
-    debug('deserializeUser')
+    debug('deserializeUser', id)
 
     User.findByPk(id).then((user: User | null) => {
       done(null, user);
@@ -27,7 +26,7 @@ export const init = (app: Application) => {
 
   passport.use(new LocalStrategy(
     (username: string, password: string, done: Function) => {
-      debug('LocalStrategy')
+      debug('LocalStrategy', username, password)
 
       User.findOne({where: {email: username}})
         .then((user: User | null) => {

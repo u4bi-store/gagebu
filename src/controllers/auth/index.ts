@@ -6,5 +6,6 @@ const authRouter = Router()
 
 authRouter.post('/login', authCtrl.login)
 authRouter.post('/logout', isAuthenticated, authCtrl.logout)
+authRouter.get('/profile', isAuthenticated, authCtrl.getProfile)
 
 export default authRouter;
