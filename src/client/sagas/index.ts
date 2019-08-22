@@ -1,4 +1,4 @@
-import {all, call, fork, takeLatest, put, take, race} from 'redux-saga/effects'
+import { all, call, fork, takeLatest, takeEvery, put, take, race} from 'redux-saga/effects'
 import { 
   FETCH_EXPENSE_LIST_REQUEST, 
   FETCH_EXPENSE_LIST_FAILURE, 
@@ -24,14 +24,17 @@ import * as apis from 'client/apis'
 import {push} from 'connected-react-router'
 import { Dialog } from 'dto';
 
+const isFailure = (action: any) => action.type.endsWith('/failure')
+
 export default function* rootSaga() {
   yield all([
-    fork(expenseSaga)
+    fork(expenseSaga$),
+    takeEvery(isFailure, handleApiFailure$)
   ])
 }
 
 
-function* expenseSaga() {
+function* expenseSaga$() {
   yield all([
     takeLatest(FETCH_EXPENSE_LIST_REQUEST, fetchExpenseList$),
     takeLatest(FETCH_EXPENSE_REQUEST, fetchExpense$),
@@ -45,8 +48,8 @@ function* fetchExpenseList$(action: FetchExpenseListAction) {
   try {
     const data = yield call(apis.fetchExpenseList)
     yield put({ type: FETCH_EXPENSE_LIST_SUCCESS, payload: data })
-  } catch {
-    yield put({ type: FETCH_EXPENSE_LIST_FAILURE })
+  } catch(err) {
+    yield put({ type: FETCH_EXPENSE_LIST_FAILURE, payload: err })
   }
 }
 
@@ -101,4 +104,24 @@ function* deleteExpense$(action: DeleteExpenseAction) {
   } catch {
     yield put({ type: DELETE_EXPENSE_FAILURE })
   }
+}
+
+function* handleApiFailure$(action: {payload: any}) {
+  const {payload} = action;
+  if (!payload) return; 
+  
+  const isApiFailure: boolean = payload.hasOwnProperty('status')
+  if (!isApiFailure) return;
+
+  const {status} = payload;
+  if (status === 401) {
+    return yield call(handleUnauthorized$)
+  }
+
+  // todo 
+  console.error(payload)
+}
+
+function* handleUnauthorized$() {
+  yield put(push('/login'))
 }

@@ -18,7 +18,12 @@ const RootRouter: React.FC = props => {
           <Route exact path="/expense/add" component={AddExpenseContainer} />
           <Route exact path="/expense/:id" component={ExpenseContainer} />
           <Route path="/expense" component={ExpenseListContainer} />
-          <Redirect to="/expense" />
+          {/* <Redirect to="/expense" /> */}
+          <Route path="/login" component={() => {
+            return (
+              <div>login</div>
+            )
+          }} />
         </Switch>
       </LayoutContainer>
     </ConnectedRouter>

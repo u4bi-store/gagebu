@@ -28,20 +28,9 @@ class ExpenseListContainer extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    // TODO saga
-    request.get('/api/users/me').then(res => {
-      this.setState({
-        user: res.body
-      })
-    }).catch(err => {
-      console.log(err)
-      if (err.status === 401) {
-        // window.location.replace(`/auth/login?returnUrl=${encodeURIComponent(window.location.href)}`)
-        alert(err.status)
-      }
-    })
+    const {setLayout, fetchExpenseList} = this.props;
 
-    this.props.setLayout({
+    setLayout({
       title: '2019년 7월 지출',
       rightControls: [
         <Icon key="0" type="plus" onClick={() =>
@@ -49,7 +38,7 @@ class ExpenseListContainer extends React.Component<Props, State> {
         } />
       ]
     })
-    this.props.fetchExpenseList()
+    fetchExpenseList()
   }
 
   render() {
