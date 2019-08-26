@@ -9,11 +9,11 @@ const debug = require('debug')(`${pkg.name}:sequelize`)
 export const init = (): Sequelize => {
   // todo Env vars.
   const sequelize: Sequelize = new Sequelize({
-    database: 'gagebu_develop',
-    dialect: 'mysql',
+    database: 'postgres',
+    dialect: 'postgres',
     host: 'localhost',
-    username: 'root',
-    password: 'test',
+    username: 'postgres',
+    password: 'postgres',
     modelPaths: [path.resolve(__dirname,'../models')]
   })
 
